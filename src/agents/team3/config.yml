@@ -8,6 +8,11 @@ steering:
   straight_threshold: 0.1
   avoidance_offset: 0.4
 
+drift:
+  node_look_ahead: 3
+  curvature_threshold: 0.5     # Seuil de courbure pour détecter un virage (ajuster entre 0.1-0.5)
+  min_speed_for_drift: 6.0      # Vitesse minimale pour un drift efficace
+
 track_items:
   detection_distance: 30
   avoidance_distance: 15
