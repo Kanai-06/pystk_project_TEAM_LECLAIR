@@ -119,7 +119,7 @@ def single_race(env, agents, names, scores):
     steps = 0
     positions = []
     while not done and steps < MAX_STEPS:
-        # time.sleep(0.1)
+        # time.sleep(0.1)
         actions = {}
         for i in range(MAX_TEAMS):
             str = f"{i}"

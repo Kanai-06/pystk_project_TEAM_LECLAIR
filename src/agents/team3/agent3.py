@@ -20,12 +20,9 @@ class Agent3(KartAgent):
         
         # Créer la figure matplotlib une seule fois
         plt.ion()  # Mode interactif
-        self.fig = plt.figure(figsize=(16, 10))
-        self.ax1 = plt.subplot(2, 3, 1)
-        self.ax2 = plt.subplot(2, 3, 2)
-        self.ax3 = plt.subplot(2, 3, 3)
-        self.ax4 = plt.subplot(2, 3, 4)  # Direction
-        self.ax5 = plt.subplot(2, 3, 5)  # Nouveau: Carte locale des nœuds
+        self.fig = plt.figure(figsize=(7, 5))
+        self.ax4 = plt.subplot(1, 2, 1)  # Direction
+        self.ax5 = plt.subplot(1, 2, 2)  # Nouveau: Carte locale des nœuds
         self.fig.suptitle("Pilot Input Analysis - TEAM L'ÉCLAIR", fontsize=14, fontweight='bold')
         plt.tight_layout()
 
@@ -42,55 +39,6 @@ class Agent3(KartAgent):
     
     def update_plot(self, paths_end=None):
         """Mettre à jour les graphiques en temps réel."""
-        if len(self.history) < 2:
-            return
-        
-        frames = [h["frame"] for h in self.history]
-        x_moyens = [h["x_moyen"] for h in self.history]
-        curvatures = [h["curvature"] for h in self.history]
-        speeds = [h["speed"] for h in self.history]
-        accelerations = [h["acceleration"] for h in self.history]
-        brakes = [1 if h["brake"] else 0 for h in self.history]
-        
-        # === GRAPHIQUE 1: Steering (x_moyen) ===
-        self.ax1.clear()
-        self.ax1.plot(frames, x_moyens, label="x_moyen (averaged)", color="blue", linewidth=2)
-        self.ax1.axhline(y=0, color='black', linestyle='--', alpha=0.3)
-        self.ax1.fill_between(frames, x_moyens, alpha=0.3, color="blue")
-        self.ax1.set_ylabel("Steering Input (x_moyen)", fontweight='bold')
-        self.ax1.set_title("Steering Control", fontweight='bold')
-        self.ax1.legend(loc='upper left')
-        self.ax1.grid(True, alpha=0.3)
-        
-        # === GRAPHIQUE 2: Curvature & Speed ===
-        self.ax2.clear()
-        ax2_twin = self.ax2.twinx()
-        
-        line1 = self.ax2.plot(frames, curvatures, label="Curvature", color="orange", linewidth=2)
-        line2 = ax2_twin.plot(frames, speeds, label="Speed", color="red", linewidth=2)
-        
-        self.ax2.set_ylabel("Curvature", fontweight='bold', color="orange")
-        ax2_twin.set_ylabel("Speed (m/s)", fontweight='bold', color="red")
-        self.ax2.set_title("Track Curvature & Velocity", fontweight='bold')
-        self.ax2.tick_params(axis='y', labelcolor='orange')
-        ax2_twin.tick_params(axis='y', labelcolor='red')
-        self.ax2.grid(True, alpha=0.3)
-        
-        lines = line1 + line2
-        labels = [l.get_label() for l in lines]
-        self.ax2.legend(lines, labels, loc='upper left')
-        
-        # === GRAPHIQUE 3: Accélération & Freinage ===
-        self.ax3.clear()
-        self.ax3.plot(frames, accelerations, label="Acceleration", color="green", linewidth=2, marker='o', markersize=3)
-        self.ax3.scatter(frames, brakes, label="Brake (on/off)", color="red", s=20, alpha=0.6)
-        self.ax3.set_ylabel("Value", fontweight='bold')
-        self.ax3.set_xlabel("Frame", fontweight='bold')
-        self.ax3.set_title("Acceleration & Brake Control", fontweight='bold')
-        self.ax3.legend(loc='upper left')
-        self.ax3.grid(True, alpha=0.3)
-        self.ax3.set_ylim(-0.2, 1.2)
-        
         # === GRAPHIQUE 4: Affichage de Direction (flèche) ===
         self.ax4.clear()
         self.ax4.set_xlim(-2, 2)

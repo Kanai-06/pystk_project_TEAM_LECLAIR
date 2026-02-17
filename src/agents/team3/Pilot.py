@@ -71,8 +71,8 @@ class Pilot():
         self.frame_count += 1
         
         # Mettre à jour le graphique tous les 20 frames
-        if self.frame_count % 20 == 0:
-            self.update_plot(paths_end=obs["paths_end"])
+        # if self.frame_count % 20 == 0:
+        self.update_plot(paths_end=obs["paths_end"])
 
         action = {
             "acceleration": acceleration,
